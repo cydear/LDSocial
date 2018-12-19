@@ -1,1 +1,15 @@
-include ':app', ':lib_core', ':lib_base', ':ldlogin', ':module_http', ':module_eventbus'
+//基础核心类库
+include ':lib_core'
+
+//基础组建module
+include ':module_base'
+//基础组建-网络层
+include ':module_http'
+//基础组建-事件总线
+include ':module_eventbus'
+
+//主工程
+include ':app'
+
+//登录模块
+include ':ldlogin'

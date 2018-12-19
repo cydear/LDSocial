@@ -1,0 +1,60 @@
+project.ext {
+    compileSdkVersion = 28
+    buildToolsVersion = "28.0.3"
+    applicationId = "com.ldsocial.app"
+    minSdkVersion = 18
+    targetSdkVersion = 28
+    versionCode = 1
+    versionName = "1.0"
+
+    //设置App配置
+    setAppDefaultConfig = {
+        extension ->
+            extension.apply plugin: 'com.android.application'
+            extension.description "app"
+            setAndroidConfig extension.android
+            setDependencies extension.dependencies
+    }
+
+    //设置Lib配置
+    setLibraryDefaultConfig = {
+        extension.apply plugin: 'com.android.library'
+        extension.desciption "lib"
+        setAndroidConfig extension.android
+        extension.android {
+            defaultConfig {
+                defaultPublishConfig 'release'
+                publishNonDefault true
+            }
+        }
+        setDependencies extension.dependencies
+    }
+
+    //设置Android配置
+    setAndroidConfig = {
+        extension ->
+            extension.compileSdkVersion = compileSdkVersion
+            extension.buildToolsVersion = buildToolsVersion
+
+            extension.defaultConfig {
+                applicationId applicationId
+                minSdkVersion minSdkVersion
+                targetSdkVersion targetSdkVersion
+
+                testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+                javaCompileOptions {
+                    annotationProcessorOptions {
+                        arguments = [AROUTER_MODULE_NAME: project.getName()]
+                    }
+                }
+            }
+    }
+
+    //设置依赖
+    setDependencies = {
+        extension ->
+            extension.implementation fileTree(dir: 'libs', include: ['*.jar'])
+            extension.annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+    }
+}

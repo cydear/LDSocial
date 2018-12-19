@@ -1,14 +1,22 @@
-apply plugin: 'com.android.application'
+apply from: "${rootProject.rootDir}/config.gradle"
+
+//apply plugin: 'com.android.application'
+
+def config = project.ext
+
+config.setAppDefaultConfig project
 
 android {
-    compileSdkVersion 28
+//    compileSdkVersion config.compileSdkVersion
+//    buildToolsVersion config.buildToolsVersion
+
     defaultConfig {
-        applicationId "com.ldsocial.app"
-        minSdkVersion 18
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        applicationId config.applicationId
+//        minSdkVersion config.minSdkVersion
+//        targetSdkVersion config.targetSdkVersion
+        versionCode config.versionCode
+        versionName config.versionName
+//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -19,6 +27,5 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':ldlogin')
 }
