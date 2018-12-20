@@ -9,10 +9,14 @@ android {
         applicationId config.applicationId
         versionCode config.versionCode
         versionName config.versionName
+
+        resConfigs "zh","en"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            //资源压缩
+            //shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

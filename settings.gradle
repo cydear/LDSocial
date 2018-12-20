@@ -1,14 +1,32 @@
 //基础核心类库
-include ':lib_core', ':module_base', ':module_router'
+include ':lib_core'
 
 //基础组建module
+include ':module_base'
 //基础组建-网络层
 include ':module_http'
 //基础组建-事件总线
 include ':module_eventbus'
+//路由组件
+include ':module_router'
+//数据库组件
+include ':module_ldsocialdata'
 
 //主工程
 include ':app'
 
 //登录模块
 include ':ldlogin'
+
+//业务组件关系映射
+project(':ldlogin').projectDir = new File('businessmodule/ldlogin')
+
+//基础组件关系映射
+project(':lib_core').projectDir = new File('basicmodule/lib_core')
+project(':module_base').projectDir = new File('basicmodule/module_base')
+project(':module_router').projectDir = new File('basicmodule/module_router')
+project(':module_http').projectDir = new File('basicmodule/module_http')
+project(':module_eventbus').projectDir = new File('basicmodule/module_eventbus')
+project(':module_ldsocialdata').projectDir = new File('basicmodule/module_ldsocialdata')
+
+//功能组件关系映射

@@ -16,6 +16,7 @@ project.ext {
     setAppDefaultConfig = {
         extension ->
             extension.apply plugin: 'com.android.application'
+            extension.apply plugin: 'org.greenrobot.greendao'
             extension.description "app"
             setAndroidConfig extension.android
             setDependencies extension.dependencies
@@ -80,6 +81,9 @@ project.ext {
             extension.defaultConfig {
                 minSdkVersion = project.ext.minSdkVersion
                 targetSdkVersion = project.ext.targetSdkVersion
+
+                //指定module使用自己的混淆文件混淆
+                consumerProguardFiles 'proguard-rules.pro'
 
                 //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
             }

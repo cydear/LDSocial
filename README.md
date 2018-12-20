@@ -11,6 +11,14 @@
 
 2. 解决在集成模式和组件模式下AndroidManifest问题
 
+3. Application 各模块参数初始化
+
+4. 组件化权限
+
+    -> base  normal权限在base module中申请
+    
+    -> module  dangerous权限在各module中申请
+
 #架构
 
 App           Application

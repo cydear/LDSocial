@@ -1,0 +1,29 @@
+apply from: "${rootProject.rootDir}/config.gradle"
+
+def config = project.ext
+
+config.setModuleLibraryConfig project
+
+android {
+
+    defaultConfig {
+        versionCode config.versionCode
+        versionName config.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    api project(':lib_core')
+    api project(':module_eventbus')
+    api project(':module_http')
+    api project(':module_router')
+    api project(':module_ldsocialdata')
+}
