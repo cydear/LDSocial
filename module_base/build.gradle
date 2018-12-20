@@ -2,7 +2,7 @@ apply from: "${rootProject.rootDir}/config.gradle"
 
 def config = project.ext
 
-config.setLibraryDefaultConfig project
+config.setModuleLibraryConfig project
 
 android {
 
@@ -21,6 +21,8 @@ android {
 }
 
 dependencies {
+    api project(':lib_core')
     api project(':module_eventbus')
     api project(':module_http')
+    api project(':module_router')
 }

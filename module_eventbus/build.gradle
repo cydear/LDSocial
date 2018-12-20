@@ -1,9 +1,8 @@
 apply from: "${rootProject.rootDir}/config.gradle"
-//apply plugin: 'com.android.library'
 
 def config = project.ext
 
-config.setLibraryDefaultConfig project
+config.setModuleLibraryConfig project
 
 android {
 
@@ -22,5 +21,5 @@ android {
 }
 
 dependencies {
-    api project(':lib_core')
+    api 'org.greenrobot:eventbus:3.1.1'
 }

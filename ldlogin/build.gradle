@@ -2,11 +2,18 @@ apply from: "${rootProject.rootDir}/config.gradle"
 
 def config = project.ext
 
-config.setLibraryDefaultConfig project
+if (config.isModule) {
+    config.setAppDefaultConfig project
+} else {
+    config.setLibraryDefaultConfig project
+}
 
 android {
-  
+
     defaultConfig {
+        if (config.isModule) {
+            applicationId config.applicationId
+        }
         versionCode config.versionCode
         versionName config.versionName
     }
@@ -15,6 +22,39 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //组件模式和集成模式下配置资源
+    sourceSets {
+        debug {
+            if (config.isModule) {
+                manifest.srcFile 'src/debug/AndroidManifest.xml'
+                res.srcDirs = ['src/debug/res', "src/main/res"]
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                resources {
+                    //排除java/debug文件夹下的所有文件
+                    exclude 'src/debug/*'
+                }
+            }
+        }
+        main {
+            if (config.isModule) {
+                manifest.srcFile 'src/debug/AndroidManifest.xml'
+                res.srcDirs = ['src/debug/res', "src/main/res"]
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                resources {
+                    //排除java/debug文件夹下的所有文件
+                    exclude 'src/debug/*'
+                }
+            }
+        }
+        release {
+            resources {
+                exclude 'src/debug/*,src/androidTest/*,src/test/*'
+            }
         }
     }
 

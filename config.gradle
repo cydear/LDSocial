@@ -7,8 +7,10 @@ project.ext {
     versionCode = 1
     versionName = "1.0"
 
-    //是否启用组件化
+    //组件化模式和集成模式开关，为false就是普通的集成模式,true表示业务组件可以作为独立的app
     isModule = false
+    //是否开启调试模式
+    isDebug = false
 
     //设置App配置
     setAppDefaultConfig = {
@@ -34,6 +36,21 @@ project.ext {
             setDependencies extension.dependencies
     }
 
+    //不使用路由注册的module配置
+    setModuleLibraryConfig = {
+        extension ->
+            extension.apply plugin: 'com.android.library'
+            extension.description "lib"
+            setModuleAndroidConfig extension.android
+            extension.android {
+                defaultConfig {
+                    defaultPublishConfig 'release'
+                    publishNonDefault true
+                }
+            }
+            setModuleDependencies extension.dependencies
+    }
+
     //设置Android配置
     setAndroidConfig = {
         extension ->
@@ -54,10 +71,30 @@ project.ext {
             }
     }
 
+    //功能组件（不需要使用路由注册）配置
+    setModuleAndroidConfig = {
+        extension ->
+            extension.compileSdkVersion = project.ext.compileSdkVersion
+            extension.buildToolsVersion = project.ext.buildToolsVersion
+
+            extension.defaultConfig {
+                minSdkVersion = project.ext.minSdkVersion
+                targetSdkVersion = project.ext.targetSdkVersion
+
+                //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+            }
+    }
+
     //设置依赖
     setDependencies = {
         extension ->
             extension.implementation fileTree(dir: 'libs', include: ['*.jar'])
             extension.annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+    }
+
+    //功能组件依赖
+    setModuleDependencies = {
+        extension ->
+            extension.implementation fileTree(dir: 'libs', include: ['*.jar'])
     }
 }
