@@ -7,6 +7,9 @@ project.ext {
     versionCode = 1
     versionName = "1.0"
 
+    //是否启用组件化
+    isModule = false
+
     //设置App配置
     setAppDefaultConfig = {
         extension ->
@@ -18,30 +21,30 @@ project.ext {
 
     //设置Lib配置
     setLibraryDefaultConfig = {
-        extension.apply plugin: 'com.android.library'
-        extension.desciption "lib"
-        setAndroidConfig extension.android
-        extension.android {
-            defaultConfig {
-                defaultPublishConfig 'release'
-                publishNonDefault true
+        extension ->
+            extension.apply plugin: 'com.android.library'
+            extension.description "lib"
+            setAndroidConfig extension.android
+            extension.android {
+                defaultConfig {
+                    defaultPublishConfig 'release'
+                    publishNonDefault true
+                }
             }
-        }
-        setDependencies extension.dependencies
+            setDependencies extension.dependencies
     }
 
     //设置Android配置
     setAndroidConfig = {
         extension ->
-            extension.compileSdkVersion = compileSdkVersion
-            extension.buildToolsVersion = buildToolsVersion
+            extension.compileSdkVersion = project.ext.compileSdkVersion
+            extension.buildToolsVersion = project.ext.buildToolsVersion
 
             extension.defaultConfig {
-                applicationId applicationId
-                minSdkVersion minSdkVersion
-                targetSdkVersion targetSdkVersion
+                minSdkVersion = project.ext.minSdkVersion
+                targetSdkVersion = project.ext.targetSdkVersion
 
-                testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+                //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
                 javaCompileOptions {
                     annotationProcessorOptions {

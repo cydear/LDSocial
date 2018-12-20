@@ -1,0 +1,16 @@
+# Created by .ignore support plugin (hsz.mobi)
+app/libs/
+ldlogin/libs/
+ldlogin/src/main/java/
+ldlogin/src/main/res/drawable/
+lib_base/libs/
+lib_base/src/
+lib_core/libs/
+lib_core/src/main/java/
+lib_core/src/main/res/drawable/
+module_eventbus/libs/
+module_eventbus/src/main/java/
+module_eventbus/src/main/res/drawable/
+module_http/libs/
+module_http/src/main/java/
+module_http/src/main/res/drawable/

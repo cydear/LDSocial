@@ -1,18 +1,13 @@
-apply plugin: 'com.android.library'
+apply from: "${rootProject.rootDir}/config.gradle"
+
+def config = project.ext
+
+config.setLibraryDefaultConfig project
 
 android {
-    compileSdkVersion 28
-
-
-
     defaultConfig {
-        minSdkVersion 18
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        versionCode config.versionCode
+        versionName config.versionName
     }
 
     buildTypes {
@@ -25,6 +20,5 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':lib_core')
 }

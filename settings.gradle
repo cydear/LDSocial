@@ -1,8 +1,7 @@
 //基础核心类库
-include ':lib_core'
+include ':lib_core', ':module_base'
 
 //基础组建module
-include ':module_base'
 //基础组建-网络层
 include ':module_http'
 //基础组建-事件总线
