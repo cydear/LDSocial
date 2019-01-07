@@ -16,5 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".chat.ChatActivity" />
+
+        <service
+            android:name=".chat.ChatService"
+            android:process=":chat" />
     </application>
 </manifest>
