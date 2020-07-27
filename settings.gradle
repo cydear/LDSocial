@@ -1,4 +1,4 @@
-//基础核心类库
+include ':complier'//基础核心类库
 include ':lib_core'
 
 //基础组建module
@@ -18,6 +18,9 @@ include ':app'
 //登录模块
 include ':ldlogin'
 
+//注解module
+include ':annotation'
+
 //业务组件关系映射
 project(':ldlogin').projectDir = new File('businessmodule/ldlogin')
 
@@ -28,5 +31,5 @@ project(':module_router').projectDir = new File('basicmodule/module_router')
 project(':module_http').projectDir = new File('basicmodule/module_http')
 project(':module_eventbus').projectDir = new File('basicmodule/module_eventbus')
 project(':module_ldsocialdata').projectDir = new File('basicmodule/module_ldsocialdata')
-
+project(':annotation').projectDir = new File('iocmodule/annotation')
 //功能组件关系映射

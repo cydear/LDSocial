@@ -5,7 +5,7 @@ import com.ldsocial.app.ldlogin.applogic.LoginAppLogic;
 
 /**
  * App 主Application
- *
+ *-
  * @author lary.huang
  * @version v 1.4.8 2018/12/20 XLXZ Exp $
  * @email huangyang@xianglin.cn
