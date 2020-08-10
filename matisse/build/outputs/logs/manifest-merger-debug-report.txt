@@ -1,0 +1,47 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:16:1-27:12
+INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:16:1-27:12
+INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:16:1-27:12
+	package
+		ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:17:5-32
+		INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml
+		INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:16:11-69
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:19:5-81
+	android:name
+		ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:19:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:20:5-80
+	android:name
+		ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:20:22-77
+application
+ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:22:5-26:19
+activity#com.zhihu.matisse.ui.MatisseActivity
+ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:23:9-73
+	android:name
+		ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:23:19-70
+activity#com.zhihu.matisse.internal.ui.AlbumPreviewActivity
+ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:24:9-87
+	android:name
+		ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:24:19-84
+activity#com.zhihu.matisse.internal.ui.SelectedPreviewActivity
+ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:25:9-90
+	android:name
+		ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml:25:19-87
+uses-sdk
+INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml
+INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml
+INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml
+INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml
+		ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml
+		INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml
+		ADDED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml
+		INJECTED from /Users/admin/Documents/Android/LDSocial/matisse/src/main/AndroidManifest.xml

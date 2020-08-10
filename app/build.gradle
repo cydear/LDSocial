@@ -10,7 +10,7 @@ android {
         versionCode config.versionCode
         versionName config.versionName
 
-        resConfigs "zh","en"
+        resConfigs "zh", "en"
     }
     buildTypes {
         release {

@@ -1,3 +1,6 @@
+include ':matisse'
+include ':picture_library'
+include ':ucrop'
 include ':complier'//基础核心类库
 include ':lib_core'
 
