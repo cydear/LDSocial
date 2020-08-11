@@ -22,4 +22,9 @@ public class IPlayCallbackListenerAdapter implements IPlayCallbackListener {
     public void onPlayCompleted() {
 
     }
+
+    @Override
+    public void onPlayerUpdateProgress(int currentDuration) {
+
+    }
 }

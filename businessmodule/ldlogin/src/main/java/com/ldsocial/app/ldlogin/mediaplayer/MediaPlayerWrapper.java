@@ -1,6 +1,8 @@
 package com.ldsocial.app.ldlogin.mediaplayer;
 
 import android.media.MediaPlayer;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -12,6 +14,10 @@ import android.util.Log;
  * @Version: 1.0
  */
 public class MediaPlayerWrapper implements IPlayer, MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
+    /**
+     * 播放进度
+     */
+    private final static int UPDATE_MEDIA_PROGRESS = 1000;
     /**
      * 播放器对象
      */
@@ -28,7 +34,43 @@ public class MediaPlayerWrapper implements IPlayer, MediaPlayer.OnCompletionList
      * 播放器播放失败处理类
      */
     private MediaPlayerThrowable throwable;
+    /**
+     * 显示播放进度
+     */
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == UPDATE_MEDIA_PROGRESS) {
+                updatePlayerProgress();
+                startMediaPlayerCountDownTime();
+            }
+        }
+    };
 
+    /**
+     * 播放器倒计时
+     */
+    private void startMediaPlayerCountDownTime() {
+        if (mediaPlayer != null && isPlaying()) {
+            Message msg = Message.obtain();
+            msg.what = UPDATE_MEDIA_PROGRESS;
+            mHandler.sendMessageDelayed(msg, 100);
+        }
+    }
+
+    /**
+     * 更新播放进度
+     */
+    private void updatePlayerProgress() {
+        if (mediaPlayer != null && isPlaying() && callbackListener != null) {
+            Log.d("MediaPlayer.Log", "getCurrentPosition=>" + mediaPlayer.getCurrentPosition());
+            callbackListener.onPlayerUpdateProgress(mediaPlayer.getCurrentPosition());
+        }
+    }
+
+    /**
+     * 初始化MediaPlayer
+     */
     private void initMediaPlayer() {
         if (mediaPlayer == null) {
             mediaPlayer = new MediaPlayer();
@@ -43,6 +85,11 @@ public class MediaPlayerWrapper implements IPlayer, MediaPlayer.OnCompletionList
         }
     }
 
+    /**
+     * 加载媒体资源文件
+     *
+     * @param sourceUrl
+     */
     @Override
     public void loadMediaSource(String sourceUrl) {
         if (TextUtils.isEmpty(sourceUrl)) {
@@ -63,6 +110,9 @@ public class MediaPlayerWrapper implements IPlayer, MediaPlayer.OnCompletionList
         }
     }
 
+    /**
+     * 释放播放器资源
+     */
     @Override
     public void release() {
         if (mediaPlayer != null) {
@@ -70,8 +120,14 @@ public class MediaPlayerWrapper implements IPlayer, MediaPlayer.OnCompletionList
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        mHandler.removeCallbacksAndMessages(null);
     }
 
+    /**
+     * 播放器是否正在播放
+     *
+     * @return
+     */
     @Override
     public boolean isPlaying() {
         if (mediaPlayer != null) {
@@ -80,16 +136,24 @@ public class MediaPlayerWrapper implements IPlayer, MediaPlayer.OnCompletionList
         return false;
     }
 
+    /**
+     * 播放
+     */
     @Override
     public void play() {
         if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
             mediaPlayer.start();
+            //开启计时器
+            startMediaPlayerCountDownTime();
             if (callbackListener != null) {
                 callbackListener.onStateChanged(PLAYING);
             }
         }
     }
 
+    /**
+     * 暂停
+     */
     @Override
     public void pause() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
@@ -100,6 +164,9 @@ public class MediaPlayerWrapper implements IPlayer, MediaPlayer.OnCompletionList
         }
     }
 
+    /**
+     * 重置
+     */
     @Override
     public void reset() {
         if (mediaPlayer != null) {
@@ -123,6 +190,11 @@ public class MediaPlayerWrapper implements IPlayer, MediaPlayer.OnCompletionList
         }
     }
 
+    /**
+     * 跳转进度
+     *
+     * @param position
+     */
     @Override
     public void seekTo(int position) {
         if (mediaPlayer != null) {

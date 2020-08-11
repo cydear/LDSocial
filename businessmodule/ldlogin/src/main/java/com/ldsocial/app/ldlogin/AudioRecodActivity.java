@@ -1,24 +1,24 @@
 package com.ldsocial.app.ldlogin;
 
 import android.Manifest;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.util.TimeUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.ldsocial.app.ldlogin.audio.AudioRecorder;
-import com.ldsocial.app.ldlogin.mediaplayer.IPlayCallbackListener;
 import com.ldsocial.app.ldlogin.mediaplayer.IPlayCallbackListenerAdapter;
 import com.ldsocial.app.ldlogin.mediaplayer.IPlayer;
 import com.ldsocial.app.ldlogin.mediaplayer.MediaPlayerWrapper;
-import com.ldsocial.app.ldlogin.mediaplayer.MediaPlyerManager;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Permission;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName AudioRecodActivity
@@ -32,6 +32,9 @@ public class AudioRecodActivity extends AppCompatActivity implements View.OnClic
     private Button btnPause;
     private Button btnStop;
     private Button btnContinue;
+    private TextView tvDuration;
+
+    private MediaPlayerWrapper player;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class AudioRecodActivity extends AppCompatActivity implements View.OnClic
         btnPause = findViewById(R.id.btn_pause);
         btnContinue = findViewById(R.id.btn_continue);
         btnStop = findViewById(R.id.btn_stop);
+        tvDuration = findViewById(R.id.tv_duration);
 
         btnStart.setOnClickListener(this);
         btnPause.setOnClickListener(this);
@@ -117,18 +121,40 @@ public class AudioRecodActivity extends AppCompatActivity implements View.OnClic
      * 继续录音
      */
     private void continueAudioRecord() {
-        //AudioRecorder.getInstance().startAudioRecord(null);
-        //MediaPlyerManager.playMusic("https://cdn-friendship.1sapp.com/friendship/friendship_app/json/loading/sign_20200810.wav");
-        final MediaPlayerWrapper player = new MediaPlayerWrapper();
+        if (player == null) {
+            player = new MediaPlayerWrapper();
+        }
         player.setPlayCallbackListener(new IPlayCallbackListenerAdapter() {
+            @Override
+            public void onTotalDuration(int duration) {
+                Log.d("MediaPlayer.Log", "totalTime=>" + duration);
+                int totalTime = duration / 1000;
+                //tvDuration.setText((totalTime / 60) + ":" + (totalTime % 60));
+            }
+
             @Override
             public void onStateChanged(int state) {
                 if (state == IPlayer.LOAD_MEDIA_COMPLETE) {
                     player.play();
                 }
             }
+
+            @Override
+            public void onPlayerUpdateProgress(int currentDuration) {
+                long hours = TimeUnit.MILLISECONDS.toHours(currentDuration);
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(currentDuration) - TimeUnit.HOURS.toMinutes(hours);
+                long seconds = TimeUnit.MILLISECONDS.toSeconds(currentDuration) - TimeUnit.MINUTES.toSeconds(minutes);
+                tvDuration.setText(String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+            }
         });
         player.loadMediaSource("https://cdn-friendship.1sapp.com/friendship/friendship_app/json/loading/sign_20200810.wav");
-        //player.play();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (player != null) {
+            player.release();
+        }
     }
 }

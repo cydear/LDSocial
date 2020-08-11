@@ -26,4 +26,11 @@ public interface IPlayCallbackListener {
      * 播放完成
      */
     void onPlayCompleted();
+
+    /**
+     * 更新播放进度
+     *
+     * @param currentDuration
+     */
+    void onPlayerUpdateProgress(int currentDuration);
 }
