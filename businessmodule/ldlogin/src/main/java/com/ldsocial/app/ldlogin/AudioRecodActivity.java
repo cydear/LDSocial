@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.TimeUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,11 +13,18 @@ import com.ldsocial.app.ldlogin.audio.AudioRecorder;
 import com.ldsocial.app.ldlogin.mediaplayer.IPlayCallbackListenerAdapter;
 import com.ldsocial.app.ldlogin.mediaplayer.IPlayer;
 import com.ldsocial.app.ldlogin.mediaplayer.MediaPlayerWrapper;
+import com.ldsocial.app.ldlogin.widget.AudioCircleProgressView;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @ClassName AudioRecodActivity
@@ -33,6 +39,8 @@ public class AudioRecodActivity extends AppCompatActivity implements View.OnClic
     private Button btnStop;
     private Button btnContinue;
     private TextView tvDuration;
+    private AudioCircleProgressView audioCircleProgressView;
+    private TextView tvTimer;
 
     private MediaPlayerWrapper player;
 
@@ -46,6 +54,9 @@ public class AudioRecodActivity extends AppCompatActivity implements View.OnClic
         btnContinue = findViewById(R.id.btn_continue);
         btnStop = findViewById(R.id.btn_stop);
         tvDuration = findViewById(R.id.tv_duration);
+        audioCircleProgressView = findViewById(R.id.audio_circle_progress);
+        tvTimer = findViewById(R.id.tv_timer);
+        tvTimer.setText("00:59");
 
         btnStart.setOnClickListener(this);
         btnPause.setOnClickListener(this);
@@ -91,7 +102,8 @@ public class AudioRecodActivity extends AppCompatActivity implements View.OnClic
         } else if (_id == R.id.btn_stop) {
             stopAudioRecord();
         } else if (_id == R.id.btn_continue) {
-            continueAudioRecord();
+            //continueAudioRecord();
+            audioCircleProgressView.reset();
         }
     }
 
@@ -114,7 +126,8 @@ public class AudioRecodActivity extends AppCompatActivity implements View.OnClic
      * 停止录音
      */
     private void stopAudioRecord() {
-        AudioRecorder.getInstance().stopAudioRecord();
+        //AudioRecorder.getInstance().stopAudioRecord();
+        startCountDownTimer();
     }
 
     /**
@@ -150,6 +163,27 @@ public class AudioRecodActivity extends AppCompatActivity implements View.OnClic
         player.loadMediaSource("https://cdn-friendship.1sapp.com/friendship/friendship_app/json/loading/sign_20200810.wav");
     }
 
+    private int count = 60;
+
+    /**
+     * 开启倒计时
+     */
+    private void startCountDownTimer() {
+        Observable.interval(0, 1, TimeUnit.SECONDS)
+                .take(count)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long value) throws Exception {
+                        Log.d("Update.Log", "seconds=>" + value);
+                        tvTimer.setText(String.format("00:%02d", (value)));
+                        audioCircleProgressView.setProgress(Integer.parseInt(String.valueOf(value + 1)), 1000);
+                    }
+                });
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -158,3 +192,7 @@ public class AudioRecodActivity extends AppCompatActivity implements View.OnClic
         }
     }
 }
+
+
+
+
